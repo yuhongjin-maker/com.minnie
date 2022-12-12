@@ -49,7 +49,7 @@ public class LoginCheckFilter implements Filter {
         boolean check = check(urls, requestURI);
 
         //3
-        log.info("本次请求不需要处理",requestURI);
+        log.info("本次请求不需要处理:{}",requestURI);
         if (check) {
             filterChain.doFilter(request, response);
             return;
@@ -69,7 +69,7 @@ public class LoginCheckFilter implements Filter {
 
         //5
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
-        return;
+
     }
 
     //2
