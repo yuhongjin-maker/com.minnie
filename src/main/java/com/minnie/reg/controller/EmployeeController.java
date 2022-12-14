@@ -96,7 +96,6 @@ public class EmployeeController {
 
         return R.success("Successfully added employees");
 
-
     }
 
     /*
@@ -136,5 +135,21 @@ public class EmployeeController {
 
         return R.success("Employee information modified successfully");
     }
+
+    //根据id查询员工信息
+    @GetMapping("/{id}")
+    public R<Employee> getById(@ PathVariable Long id){
+        log.info("根据id查找");
+        Employee employee  = employeeService.getById(id);
+        if(employee !=null){
+            return R.success(employee);
+
+        }else{
+            return R.error("没有查询到");
+        }
+
+    }
+
+
 
 }
