@@ -123,4 +123,18 @@ public class EmployeeController {
 
     }
 
+    //启用，禁用员工账号
+    //根据id修改员工信息
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Employee employee){
+        Long empId = (Long) request.getSession().getAttribute("employee");
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(empId);
+
+
+        employeeService.updateById(employee);
+
+        return R.success("Employee information modified successfully");
+    }
+
 }
