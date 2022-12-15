@@ -61,4 +61,18 @@ public class CategoryController {
         categoryService.remove(ids);
         return R.success("分类信息删除成功");
     }
+
+    //更新菜品信息
+    @PutMapping
+    public R<String> update(HttpServletRequest request, @RequestBody Category category){
+        //Long empId = (Long) request.getSession().getAttribute("employee");
+        //employee.setUpdateTime(LocalDateTime.now());
+        //employee.setUpdateUser(empId)
+        log.info("修改分类信息{}",category);
+
+        categoryService.updateById(category);
+
+        return R.success("修改分类信息成功");
+
+    }
 }
