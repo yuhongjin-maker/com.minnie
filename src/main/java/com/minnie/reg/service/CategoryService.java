@@ -1,0 +1,7 @@
+package com.minnie.reg.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.minnie.reg.entity.Category;
+
+public interface CategoryService extends IService<Category> {
+}
