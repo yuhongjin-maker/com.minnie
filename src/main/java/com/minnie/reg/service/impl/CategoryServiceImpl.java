@@ -6,7 +6,7 @@ import com.minnie.reg.common.CustomException;
 import com.minnie.reg.entity.Category;
 import com.minnie.reg.entity.Dish;
 import com.minnie.reg.entity.Setmeal;
-import com.minnie.reg.mapper.CategoryMapper;
+import com.minnie.reg.Filter.mapper.CategoryMapper;
 import com.minnie.reg.service.CategoryService;
 import com.minnie.reg.service.DishService;
 import com.minnie.reg.service.SetmealService;

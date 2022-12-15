@@ -1,4 +1,4 @@
-package com.minnie.reg.mapper;
+package com.minnie.reg.Filter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.minnie.reg.entity.Dish;

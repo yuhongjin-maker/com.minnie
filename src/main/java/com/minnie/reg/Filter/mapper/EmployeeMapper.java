@@ -1,4 +1,4 @@
-package com.minnie.reg.mapper;
+package com.minnie.reg.Filter.mapper;
 
 import com.minnie.reg.entity.Employee;
 import org.apache.ibatis.annotations.Mapper;

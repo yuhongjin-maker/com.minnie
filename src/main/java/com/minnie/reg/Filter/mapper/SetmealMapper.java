@@ -1,10 +1,11 @@
-package com.minnie.reg.mapper;
+package com.minnie.reg.Filter.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.minnie.reg.entity.Category;
+import com.minnie.reg.entity.Setmeal;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface CategoryMapper extends BaseMapper<Category> {
+public interface SetmealMapper extends BaseMapper<Setmeal> {
 
 }
