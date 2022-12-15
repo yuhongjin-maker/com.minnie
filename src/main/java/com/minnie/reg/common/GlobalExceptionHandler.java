@@ -25,4 +25,12 @@ public class GlobalExceptionHandler {
 
 
     }
+
+
+    @ExceptionHandler(CustomException.class)
+    public R<String> excptionHandler(CustomException ex){
+        log.error(ex.getMessage());
+        String msg = ex.getMessage();
+        return R.error(msg);
+    }
 }
