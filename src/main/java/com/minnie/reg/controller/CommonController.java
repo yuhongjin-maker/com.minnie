@@ -3,6 +3,7 @@ package com.minnie.reg.controller;
 import com.minnie.reg.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import java.util.UUID;
 //文件上传下载
 
 public class CommonController {
-    @Value("${minnie.path}")
+    @Value("${reggie.path}")
     private String basePath;
     //文件上传
     @PostMapping("/upload")
@@ -34,20 +35,22 @@ public class CommonController {
         //临时文件需要转存
         log.info(file.toString());
 
+
         //使用UUID重新生成文件名，防止文件名称重复造成文件覆盖
+
 
         String form= file.getOriginalFilename();
         String suffix = form.substring(form.lastIndexOf("."));
         String fileName = UUID.randomUUID().toString();
-
-        //创建一个目录对象
-        File dir= new File(basePath);
-        //判断当前目录是否存在
-        if(!dir.exists()){
-            //目录不存在，需要创建
-            dir.mkdirs();
-        }
-
+//
+//        //创建一个目录对象
+//        File dir= new File(basePath);
+//        //判断当前目录是否存在
+//        if(!dir.exists()){
+//            //目录不存在，需要创建
+//            dir.mkdirs();
+//        }
+//
         try{
             file.transferTo(new File(basePath+fileName+suffix));
 
@@ -61,34 +64,66 @@ public class CommonController {
 
     }
 
-    @GetMapping("/download")
+//    @GetMapping("/download")
+//
+//    public void download(HttpServletResponse response,String name)  {
+//
+//        try{
+//            //输入流，通过输入流读取文件内容
+//            FileInputStream fileInputStream = (new FileInputStream(name));
+//
+//            //输出流，通过输出流将文件写回浏览器，在浏览器展示图件了
+//
+//            ServletOutputStream outputStream = response.getOutputStream();
+//
+//            response.setContentType("image/jpeg");
+//            int len=0;
+//            byte[] bytes = new byte[1024];
+//            while (fileInputStream.read(bytes) != -1){
+//                outputStream.write(bytes,0,len);
+//                outputStream.flush();
+//            }
+//
+//            //关闭资源
+//            outputStream.close();
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//
+//        }
+//    }
+@GetMapping("/download")
+public void download(String name, HttpServletResponse response) {
+    FileInputStream fis = null;
+    ServletOutputStream os = null;
+    try {
+        fis = new FileInputStream( name);
+        os = response.getOutputStream();
+        response.setContentType("image/jpeg");
+        int len;
+        byte[] buffer = new byte[1024];
+        while ((len = fis.read(buffer)) != -1)
+            os.write(buffer, 0, len);
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    } finally {
+        if (fis != null) {
 
-    public void download(HttpServletResponse response,String name)  {
-
-        try{
-            //输入流，通过输入流读取文件内容
-            FileInputStream fileInputStream = (new FileInputStream(new File(basePath+name)));
-
-            //输出流，通过输出流将文件写回浏览器，在浏览器展示图件了
-
-            ServletOutputStream outputStream = response.getOutputStream();
-
-            response.setContentType("image/jpeg");
-            int len=0;
-            byte[] bytes = new byte[1024];
-            while (fileInputStream.read(bytes) != -1){
-                outputStream.write(bytes,0,len);
-                outputStream.flush();
+            try {
+                fis.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-            //关闭资源
-            outputStream.close();
-
-        }catch (Exception e){
-            e.printStackTrace();
-
         }
-
-
+        if (os != null) {
+            try {
+                os.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
+}
+
+
 }
