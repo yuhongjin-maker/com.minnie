@@ -7,4 +7,8 @@ import com.minnie.reg.entity.Dish;
 
 public interface DishService extends IService<Dish> {
     void saveWithFlavor(DishDto dishDto);
+
+    DishDto getByIdWithFlavor(Long id);
+
+    public void updateWithFlavor(DishDto dishDto);
 }
