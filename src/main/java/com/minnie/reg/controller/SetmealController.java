@@ -65,6 +65,16 @@ public class SetmealController {
         return R.success(dtoPage);
     }
 
+    //删除套餐
+
+    @DeleteMapping
+    public R<String> deleteByIds(@RequestParam List<Long> ids) {
+        log.info("要删除的套餐id为：{}",ids);
+        setmealService.removeWithDish(ids);
+        return R.success("删除成功");
+
+    }
+
 
 
 
